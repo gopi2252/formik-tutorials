@@ -1,14 +1,35 @@
 import { useFormik } from "formik";
 
+const initialValues = {
+    name : '',
+    email : '',
+    channel : ''
+}
+
+const validate =  values => {
+    let errors = {}
+
+    if(!values.name){
+        errors.name = "Required"
+    }
+
+    if(!values.email){
+        errors.email = "Required"
+    }
+    
+    if(!values.channel){
+        errors.channel = "Required"
+    }
+    return errors;
+}
+const onSubmit = values => console.log(values)
 
 const YoutubeForm = () => {
 
     const formik = useFormik({
-        initialValues : {
-            name : '',
-            email : '',
-            channel : ''
-        }
+        initialValues ,
+        validate,
+        onSubmit 
     })
 
 
@@ -16,7 +37,7 @@ const YoutubeForm = () => {
 
     return (
         <div>
-            <form>
+            <form onSubmit={formik.handleSubmit}>
                 <label htmlFor="name">Name</label>
                 <input type="text" id="name" name="name" 
                 onChange={formik.handleChange} value={formik.values.name} />
